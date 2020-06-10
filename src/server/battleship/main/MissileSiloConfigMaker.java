@@ -5,17 +5,19 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
-import java.util.Scanner;
+
+import com.clientfx.consolewindow.ConsoleOutput;
+import com.clientfx.consolewindow.InputReader;
 
 public class MissileSiloConfigMaker
 {
-	public static void make(Scanner scanner) {
+	public static void make(InputReader inputReader) {
 		MissileSilo m = null;
 		
 		String siloType = "neither";
 		while (siloType.equals("neither")) {
-			System.out.println("Do you want an 'ordered' or 'unordered' Missile Silo?");
-			switch (scanner.nextLine()) {
+			ConsoleOutput.println("Do you want an 'ordered' or 'unordered' Missile Silo?");
+			switch (inputReader.getNextLine()) {
 			case "ordered":
 				siloType = "ordered";
 				break;
@@ -24,7 +26,7 @@ public class MissileSiloConfigMaker
 				break;
 			}
 		}
-		System.out.println("You chose " + siloType);
+		ConsoleOutput.println("You chose " + siloType);
 
 		if (siloType.equals("unordered")) {
 			int[] missileCounts = new int[Missile.values().length];
@@ -32,8 +34,8 @@ public class MissileSiloConfigMaker
 
 				int option = -1;
 				while (option == -1) {
-					System.out.println("How many " + Missile.values()[i] + " missiles do you want?");
-					try { option = scanner.nextInt(); }
+					ConsoleOutput.println("How many " + Missile.values()[i] + " missiles do you want?");
+					try { option = inputReader.nextInt(); }
 					catch (InputMismatchException e) {}
 					missileCounts[i] = option;
 				}
@@ -42,19 +44,17 @@ public class MissileSiloConfigMaker
 		} else if (siloType.equals("ordered")) {
 			ArrayList<Missile> missiles = new ArrayList<Missile>();
 			String option = "";
-			System.out.println("Add missiles to the silo in order of usage. (EOF to save) (v_LiNe, H_line, single, SPLASH");
+			ConsoleOutput.println("Add missiles to the silo in order of usage. (EOF to save) (v_LiNe, H_line, single, SPLASH");
 			while (!option.equals("EOF")) {
-				System.out.print(missiles.size() + " ");
-				try { option = scanner.nextLine(); }
+				ConsoleOutput.print(missiles.size() + " ");
+				try { option = inputReader.getNextLine(); }
 				catch (InputMismatchException e) {}
 				try { missiles.add(Missile.valueOf(option.toUpperCase())); } 
 				catch (IllegalArgumentException e) {};
 			}
 			m = new OrderedMissileSilo(missiles);
 			
-		} else { System.out.println("How did we get here?"); }
-
-		scanner.close();
+		} else { ConsoleOutput.println("How did we get here?"); }
 		
 
 		try {
@@ -63,7 +63,7 @@ public class MissileSiloConfigMaker
 			out.writeObject(m);
 			out.close();
 			fileOut.close();
-			System.out.println("Serialized data is saved in missilesilo.ser");
+			ConsoleOutput.println("Serialized data is saved in missilesilo.ser");
 		} catch (IOException i) {
 			i.printStackTrace();
 		}

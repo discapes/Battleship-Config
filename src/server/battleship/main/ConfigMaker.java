@@ -1,30 +1,45 @@
 package server.battleship.main;
 
-import java.util.Scanner;
+import java.io.IOException;
 
-public class ConfigMaker
+import com.clientfx.confirmbox.ConfirmBox;
+import com.clientfx.consolewindow.ConsoleWindow;
+
+import javafx.application.Application;
+import javafx.stage.Stage;
+
+public class ConfigMaker extends Application
 {
-
+	private Thread consoleCfgThread;
+	
 	public static void main(String[] args)
 	{
-		String option = "";
-		Scanner scanner = new Scanner(System.in);
-		while(!option.equalsIgnoreCase("q")) {
-			System.out.println("What would you like to make? (missile, game, ships)");
-			option = scanner.nextLine();
-			switch(option) {
-			case "missile":
-				MissileSiloConfigMaker.make(scanner);
-				break;
-			case "game":
-				GameConfigMaker.make(scanner);
-				break;
-			case "ships":
-				ShipsMapMaker.make(scanner);
-				break;
-			}
-		}
-		
+		launch(args);
+	}
 
+	@Override
+	public void start(Stage stage) throws Exception
+	{
+		stage.setTitle("Battleships config maker");
+		ConfirmBox confirmBox = new ConfirmBox();
+		stage.setOnCloseRequest(e -> {
+			e.consume();
+			try
+			{
+				if (confirmBox.ask("Exit?", "Are you sure you want to exit?"))
+					stage.close();
+			} catch (IOException e1)
+			{
+				e1.printStackTrace();
+			}
+		});
+		ConsoleWindow consoleWindow = new ConsoleWindow();
+		consoleCfgThread = consoleWindow.startConsoleCfg(stage);
+		stage.show();
+	}
+	
+	@Override
+	public void stop() {
+		consoleCfgThread.stop();
 	}
 }

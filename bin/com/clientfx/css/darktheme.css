@@ -1,0 +1,64 @@
+.background {
+	-fx-background-color: #545454
+}
+
+.eighteen-text {
+	-fx-text-fill: #efefef;
+	-fx-font-family: "Segoe UI Semilight";
+	-fx-font-size: 18.0
+}
+.thirteen-text {
+	-fx-text-fill: #efefef;
+	-fx-font-family: "Segoe UI Semilight";
+	-fx-font-size: 13.0
+}
+
+.button {
+	-fx-background-radius: 20.0;
+	-fx-background-color: #545454;
+	-fx-border-color: #efefef;
+	-fx-text-fill: #efefef;
+	-fx-border-radius: 20.0;
+	-fx-font-family: "Segoe UI Semilight";
+	-fx-font-size: 18.0
+}
+
+.text-area .content {
+	-fx-background-color: dimgrey;
+}
+
+.text-area {
+	-fx-text-fill: azure;
+	-fx-background-color: azure;
+	-fx-highlight-fill: dimgrey;
+}
+
+.text-area:focused {
+    -fx-background-color: azure;
+    -fx-highlight-fill: dimgrey;
+}
+
+.text-area:hover {
+    -fx-background-color: azure;
+    -fx-highlight-fill: dimgrey;
+}
+
+.button:hover    {
+	-fx-background-color: #282828;
+}
+
+#grids .button:hover    {
+	-fx-background-color: #282828;
+}
+
+#grids .button {
+	-fx-background-radius: 7.0;
+	-fx-background-color: #545454;
+	-fx-border-color: #efefef;
+	-fx-text-fill: #efefef;
+	-fx-border-radius: 7.0;
+	-fx-font-family: "Segoe UI Semilight";
+	-fx-font-size: 18.0
+}
+
+
