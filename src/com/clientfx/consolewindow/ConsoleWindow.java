@@ -13,6 +13,20 @@ import server.battleship.main.ShipsMapMaker;
 
 public class ConsoleWindow
 {
+	public static String ask(String question) {
+		ConsoleOutput.print(question + " ");
+		String input = inputReader.getNextLine();
+		ConsoleOutput.println(input);
+		return input;
+	}
+	
+	public static int askInt(String question) {
+		ConsoleOutput.print(question + " ");
+		int input = inputReader.nextInt();
+		ConsoleOutput.println(input);
+		return input;
+	}
+	
 	private Scene scene;
 	private static InputReader inputReader;
 	public static InputReader getInputReader() {
@@ -34,9 +48,7 @@ public class ConsoleWindow
 			@Override public Void call() {
 				String option = "";
 				while(!option.equalsIgnoreCase("q")) {
-					ConsoleOutput.print("What would you like to make? (missile, game, ships) ");
-					option = inputReader.getNextLine();
-					ConsoleOutput.println(option);
+						option = ask("What would you like to make? (missile, game, ships)");
 					switch(option) {
 					case "missile":
 						MissileSiloConfigMaker.make(inputReader);
@@ -45,7 +57,7 @@ public class ConsoleWindow
 						GameConfigMaker.make(inputReader);
 						break;
 					case "ships":
-						ShipsMapMaker.make(inputReader);
+						ShipsMapMaker.make(inputReader, stage);
 						break;
 					}
 				}

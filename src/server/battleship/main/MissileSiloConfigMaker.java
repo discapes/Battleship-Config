@@ -4,9 +4,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.InputMismatchException;
 
 import com.clientfx.consolewindow.ConsoleOutput;
+import com.clientfx.consolewindow.ConsoleWindow;
 import com.clientfx.consolewindow.InputReader;
 
 public class MissileSiloConfigMaker
@@ -16,8 +16,7 @@ public class MissileSiloConfigMaker
 		
 		String siloType = "neither";
 		while (siloType.equals("neither")) {
-			ConsoleOutput.println("Do you want an 'ordered' or 'unordered' Missile Silo?");
-			switch (inputReader.getNextLine()) {
+			switch (ConsoleWindow.ask("Do you want an 'ordered' or 'unordered' Missile Silo?")) {
 			case "ordered":
 				siloType = "ordered";
 				break;
@@ -34,9 +33,7 @@ public class MissileSiloConfigMaker
 
 				int option = -1;
 				while (option == -1) {
-					ConsoleOutput.println("How many " + Missile.values()[i] + " missiles do you want?");
-					try { option = inputReader.nextInt(); }
-					catch (InputMismatchException e) {}
+					option = ConsoleWindow.askInt("How many " + Missile.values()[i] + " missiles do you want?");
 					missileCounts[i] = option;
 				}
 			}
@@ -45,12 +42,10 @@ public class MissileSiloConfigMaker
 			ArrayList<Missile> missiles = new ArrayList<Missile>();
 			String option = "";
 			ConsoleOutput.println("Add missiles to the silo in order of usage. (EOF to save) (v_LiNe, H_line, single, SPLASH");
-			while (!option.equals("EOF")) {
-				ConsoleOutput.print(missiles.size() + " ");
-				try { option = inputReader.getNextLine(); }
-				catch (InputMismatchException e) {}
+			while (!option.equalsIgnoreCase("EOF")) {
+				option = ConsoleWindow.ask(missiles.size() + " ");
 				try { missiles.add(Missile.valueOf(option.toUpperCase())); } 
-				catch (IllegalArgumentException e) {};
+				catch (IllegalArgumentException e) { ConsoleOutput.println("Invalid");};
 			}
 			m = new OrderedMissileSilo(missiles);
 			

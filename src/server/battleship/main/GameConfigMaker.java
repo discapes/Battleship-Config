@@ -5,17 +5,14 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 
 import com.clientfx.consolewindow.ConsoleOutput;
+import com.clientfx.consolewindow.ConsoleWindow;
 import com.clientfx.consolewindow.InputReader;
 
 public class GameConfigMaker
 {
 	public static void make(InputReader inputReader) {
-		ConsoleOutput.print("No. of columns? ");
-		int cols = inputReader.nextInt();
-		ConsoleOutput.println(cols);
-		ConsoleOutput.print("No. of rows? ");
-		int rows = inputReader.nextInt();
-		ConsoleOutput.println(rows);
+		int cols = ConsoleWindow.askInt("No. of columns? ");
+		int rows = ConsoleWindow.askInt("No. of rows? ");
 		GameConfig gameConfig = new GameConfig(cols, rows);
 		try {
 			FileOutputStream fileOut = new FileOutputStream("gameconfig.ser");
